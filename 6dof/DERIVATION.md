@@ -47,23 +47,22 @@ $$
 \phi_z & 0 & -\phi_x \\
 -\phi_y & \phi_x & 0
 \end{bmatrix}
-
 $$
 
 The **A-matrix** (right Jacobian of SO(3) for exp) relates $\delta\boldsymbol{\phi}$ to rotation perturbation. For $\boldsymbol{\theta} \in \mathbb{R}^3$, $\theta = \|\boldsymbol{\theta}\|$:
 
 $$
 \mathbf{A}(\boldsymbol{\theta}) = \mathbf{I} + \frac{1-\cos\theta}{\theta^2} [\boldsymbol{\theta}]_{\times} + \frac{1 - \frac{\sin\theta}{\theta}}{\theta^2} [\boldsymbol{\theta}]_{\times}^2
-
 $$
+
 When $\theta \to 0$: $\mathbf{A}(\boldsymbol{\theta}) \to \mathbf{I}$.
 
 The **inverse right Jacobian** $\mathbf{J}\_{r}^{-1}(\boldsymbol{\phi})$ maps from tangent space of $\log(R)$ to rotation perturbation. For $\phi = \|\boldsymbol{\phi}\|$:
 
 $$
 \mathbf{J}_{r}^{-1}(\boldsymbol{\phi}) = \mathbf{I} + \frac{1}{2}[\boldsymbol{\phi}]_{\times} + \left(1 - \frac{\frac{\theta}{2}(1+\cos\theta)}{\sin\theta}\right) \left(\frac{\boldsymbol{\phi}\boldsymbol{\phi}^\top}{\|\boldsymbol{\phi}\|^2} - \mathbf{I}\right)
-
 $$
+
 When $\|\boldsymbol{\phi}\| \le \epsilon$: $\mathbf{J}\_{r}^{-1}(\boldsymbol{\phi}) \approx \mathbf{I} + \frac{1}{2}[\boldsymbol{\phi}]\_{\times}$.
 
 #### 2.2 State Vector
@@ -122,7 +121,6 @@ $$
 \dot{\mathbf{v}} &= \mathbf{R}(\mathbf{a} - \mathbf{b}_{a}) + \mathbf{g} \\
 \dot{\mathbf{b}}_{g} &= \mathbf{0}, \quad \dot{\mathbf{b}}_{a} = \mathbf{0}, \quad \dot{\mathbf{t}}_{gnss} = \mathbf{0}, \quad \dot{\mathbf{R}}_{gnss} = \mathbf{0}, \quad \dot{\mathbf{R}}_{car} = \mathbf{0}, \quad \dot{\mathbf{g}} = \mathbf{0}
 \end{aligned}
-
 $$
 
 Let $\tilde{\mathbf{a}} = \mathbf{a} - \mathbf{b}\_{a}$, $\tilde{\boldsymbol{\omega}} = \boldsymbol{\omega} - \mathbf{b}\_{g}$. The flatted output is:
@@ -136,7 +134,6 @@ f(\mathbf{x}, \mathbf{u}) = \begin{bmatrix}
 \ldots \\
 \mathbf{0}
 \end{bmatrix}
-
 $$
 
 ---
@@ -150,11 +147,10 @@ The continuous dynamics are integrated over $\Delta t$. Three schemes are used:
 $$
 \mathbf{R}_{k+1} = \mathbf{R}_{k} \exp(\Delta t \cdot \tilde{\boldsymbol{\omega}}), \quad
 \mathbf{v}_{k+1} = \mathbf{v}_{k} + \Delta t \cdot (\mathbf{R}_{k} \tilde{\mathbf{a}} + \mathbf{g})
-
 $$
+
 $$
 \mathbf{p}_{k+1} = \mathbf{p}_{k} + \Delta t \cdot \mathbf{v}_{k} + \frac{\Delta t^2}{2} (\mathbf{R}_{k} \tilde{\mathbf{a}} + \mathbf{g})
-
 $$
 
 **Midpoint:** Uses $\tilde{\boldsymbol{\omega}}\_{mid} = \frac{1}{2}(\boldsymbol{\omega}\_{k} + \boldsymbol{\omega}\_{k+1}) - \mathbf{b}\_{g}$ and acceleration at $t + \Delta t/2$.
@@ -190,14 +186,12 @@ $$
 \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{I} \\
 \vdots & \vdots & \vdots & \vdots
 \end{bmatrix}
-
 $$
 
 #### 6.3 Process Noise Model $\mathbf{Q}$
 
 $$
 \mathbf{Q} = \text{diag}(\sigma\_{ng}^2 \mathbf{I}\_{3}, \sigma\_{na}^2 \mathbf{I}\_{3}, \sigma\_{nbg}^2 \mathbf{I}\_{3}, \sigma\_{nba}^2 \mathbf{I}\_{3})
-
 $$
 
 | Parameter | Symbol | Typical (phone) | Description |
@@ -215,7 +209,6 @@ For **SO3** states, the transition uses $\mathbf{A}(-\Delta t \cdot \tilde{\bold
 
 $$
 \mathbf{P}_{k+1|k} = \mathbf{F}_{1} \mathbf{P}_{k|k} \mathbf{F}_{1}^\top + (\Delta t \cdot \mathbf{G}) \mathbf{Q} (\Delta t \cdot \mathbf{G})^\top
-
 $$
 
 ---
@@ -234,7 +227,6 @@ For **rotation** on SO3, the residual must respect the manifold:
 
 $$
 \mathbf{y}\_{rot} = \log\left( R\_{obs} \cdot R\_{pred}^{-1} \right)
-
 $$
 
 **Pose (position + rotation):**
@@ -244,7 +236,6 @@ $$
 \mathbf{z}\_{p} - \mathbf{h}\_{p}(\mathbf{x}) \\
 \log(R\_{obs} \cdot R\_{pred}^{-1})
 \end{bmatrix}
-
 $$
 
 #### 7.2 Position Measurement (GNSS)
@@ -264,7 +255,6 @@ $$
 $$
 \frac{\partial \log(\mathbf{R} \mathbf{R}\_{gnss})}{\partial \boldsymbol{\phi}^R} = \mathbf{J}\_{r}^{-1}(\boldsymbol{\phi}\_{hat}) \cdot \mathbf{R}\_{gnss}^\top, \quad
 \frac{\partial \log(\mathbf{R} \mathbf{R}\_{gnss})}{\partial \boldsymbol{\phi}^{R\_{gnss}}} = \mathbf{J}\_{r}^{-1}(\boldsymbol{\phi}\_{hat})
-
 $$
 
 #### 7.4 Velocity Measurement (Zero-Velocity / Chassis)
