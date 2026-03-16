@@ -42,7 +42,11 @@ The **hat operator** maps $\boldsymbol{\phi} \in \mathbb{R}^3$ to $\mathfrak{so}
 
 $$
 [\boldsymbol{\phi}]_{\times} = \boldsymbol{\phi}^\wedge = 
-\begin{bmatrix} 0 & -\phi_z & \phi_y \\ \phi_z & 0 & -\phi_x \\ -\phi_y & \phi_x & 0 \end{bmatrix}
+\begin{bmatrix}
+0 & -\phi_z & \phi_y \\
+\phi_z & 0 & -\phi_x \\
+-\phi_y & \phi_x & 0
+\end{bmatrix}
 $$
 
 The **A-matrix** (right Jacobian of SO(3) for exp) relates $\delta\boldsymbol{\phi}$ to rotation perturbation. For $\boldsymbol{\theta} \in \mathbb{R}^3$, $\theta = \|\boldsymbol{\theta}\|$:
@@ -52,12 +56,12 @@ $$
 $$
 When $\theta \to 0$: $\mathbf{A}(\boldsymbol{\theta}) \to \mathbf{I}$.
 
-The **inverse right Jacobian** $\mathbf{J}_{r}^{-1}(\boldsymbol{\phi})$ maps from tangent space of $\log(R)$ to rotation perturbation. For $\phi = \|\boldsymbol{\phi}\|$:
+The **inverse right Jacobian** $\mathbf{J}\_{r}^{-1}(\boldsymbol{\phi})$ maps from tangent space of $\log(R)$ to rotation perturbation. For $\phi = \|\boldsymbol{\phi}\|$:
 
 $$
 \mathbf{J}_{r}^{-1}(\boldsymbol{\phi}) = \mathbf{I} + \frac{1}{2}[\boldsymbol{\phi}]_{\times} + \left(1 - \frac{\frac{\theta}{2}(1+\cos\theta)}{\sin\theta}\right) \left(\frac{\boldsymbol{\phi}\boldsymbol{\phi}^\top}{\|\boldsymbol{\phi}\|^2} - \mathbf{I}\right)
 $$
-When $\|\boldsymbol{\phi}\| \le \epsilon$: $\mathbf{J}_{r}^{-1}(\boldsymbol{\phi}) \approx \mathbf{I} + \frac{1}{2}[\boldsymbol{\phi}]_{\times}$.
+When $\|\boldsymbol{\phi}\| \le \epsilon$: $\mathbf{J}\_{r}^{-1}(\boldsymbol{\phi}) \approx \mathbf{I} + \frac{1}{2}[\boldsymbol{\phi}]\_{\times}$.
 
 #### 2.2 State Vector
 
@@ -68,11 +72,11 @@ State $\mathbf{x}$ has DOF = 26, DIM = 27:
 | 0–2   | $\mathbf{p}$ | $\mathbb{R}^3$ | 3 |
 | 3–5   | $\mathbf{R}$ (SO3) | rotation | 3 |
 | 6–8   | $\mathbf{v}$ | $\mathbb{R}^3$ | 3 |
-| 9–11  | $\mathbf{b}_{g}$ | $\mathbb{R}^3$ | 3 |
-| 12–14 | $\mathbf{b}_{a}$ | $\mathbb{R}^3$ | 3 |
-| 15–17 | $\mathbf{t}_{gnss}$ | $\mathbb{R}^3$ | 3 |
-| 18–20 | $\mathbf{R}_{gnss}$ (SO3) | rotation | 3 |
-| 21–23 | $\mathbf{R}_{car}$ (SO3) | rotation | 3 |
+| 9–11  | $\mathbf{b}\_{g}$ | $\mathbb{R}^3$ | 3 |
+| 12–14 | $\mathbf{b}\_{a}$ | $\mathbb{R}^3$ | 3 |
+| 15–17 | $\mathbf{t}\_{gnss}$ | $\mathbb{R}^3$ | 3 |
+| 18–20 | $\mathbf{R}\_{gnss}$ (SO3) | rotation | 3 |
+| 21–23 | $\mathbf{R}\_{car}$ (SO3) | rotation | 3 |
 | 24–25 | $\mathbf{g}$ (S2) | gravity dir | 2 |
 
 ---
@@ -97,8 +101,8 @@ The nominal state is propagated in closed form; the error state is reset after e
 - S2: uses exponential map on the sphere
 
 **Boxminus** $\ominus$: extract tangent vector between two manifold points.
-- $\delta\mathbf{x} = \mathbf{x}_{2} \ominus \mathbf{x}_{1}$ such that $\mathbf{x}_{2} = \mathbf{x}_{1} \oplus \delta\mathbf{x}$
-- SO3: $\boldsymbol{\phi} = \log(\mathbf{R}_{1}^{-1} \mathbf{R}_{2})$
+- $\delta\mathbf{x} = \mathbf{x}\_{2} \ominus \mathbf{x}\_{1}$ such that $\mathbf{x}\_{2} = \mathbf{x}\_{1} \oplus \delta\mathbf{x}$
+- SO3: $\boldsymbol{\phi} = \log(\mathbf{R}\_{1}^{-1} \mathbf{R}\_{2})$
 
 ---
 
@@ -117,10 +121,17 @@ $$
 \end{aligned}
 $$
 
-Let $\tilde{\mathbf{a}} = \mathbf{a} - \mathbf{b}_{a}$, $\tilde{\boldsymbol{\omega}} = \boldsymbol{\omega} - \mathbf{b}_{g}$. The flatted output is:
+Let $\tilde{\mathbf{a}} = \mathbf{a} - \mathbf{b}\_{a}$, $\tilde{\boldsymbol{\omega}} = \boldsymbol{\omega} - \mathbf{b}\_{g}$. The flatted output is:
 
 $$
-f(\mathbf{x}, \mathbf{u}) = \begin{bmatrix} \mathbf{v} \\ \tilde{\boldsymbol{\omega}} \\ \mathbf{R}\tilde{\mathbf{a}} + \mathbf{g} \\ \mathbf{0} \\ \ldots \\ \mathbf{0} \end{bmatrix}
+f(\mathbf{x}, \mathbf{u}) = \begin{bmatrix}
+\mathbf{v} \\
+\tilde{\boldsymbol{\omega}} \\
+\mathbf{R}\tilde{\mathbf{a}} + \mathbf{g} \\
+\mathbf{0} \\
+\ldots \\
+\mathbf{0}
+\end{bmatrix}
 $$
 
 ---
@@ -139,7 +150,7 @@ $$
 \mathbf{p}_{k+1} = \mathbf{p}_{k} + \Delta t \cdot \mathbf{v}_{k} + \frac{\Delta t^2}{2} (\mathbf{R}_{k} \tilde{\mathbf{a}} + \mathbf{g})
 $$
 
-**Midpoint:** Uses $\tilde{\boldsymbol{\omega}}_{mid} = \frac{1}{2}(\boldsymbol{\omega}_{k} + \boldsymbol{\omega}_{k+1}) - \mathbf{b}_{g}$ and acceleration at $t + \Delta t/2$.
+**Midpoint:** Uses $\tilde{\boldsymbol{\omega}}\_{mid} = \frac{1}{2}(\boldsymbol{\omega}\_{k} + \boldsymbol{\omega}\_{k+1}) - \mathbf{b}\_{g}$ and acceleration at $t + \Delta t/2$.
 
 **Runge-Kutta 4th Order:** Standard RK4 for higher accuracy when $\Delta t$ is not small.
 
@@ -153,15 +164,15 @@ Only non-zero blocks are shown. $\mathbf{F}$ maps from tangent space to tangent 
 
 | Block | Expression |
 |-------|------------|
-| $\frac{\partial \dot{\mathbf{p}}}{\partial \mathbf{v}}$ | $\mathbf{I}_{3\times3}$ |
-| $\frac{\partial \dot{\mathbf{v}}}{\partial \boldsymbol{\phi}^R}$ | $-\mathbf{R} [\tilde{\mathbf{a}}]_{\times}$ |
-| $\frac{\partial \dot{\mathbf{v}}}{\partial \mathbf{b}_{a}}$ | $-\mathbf{R}$ |
-| $\frac{\partial \dot{\mathbf{v}}}{\partial \mathbf{g}}$ | $\mathbf{M}_{g}$ (3×2 S2 tangent) |
-| $\frac{\partial \dot{\boldsymbol{\phi}}^R}{\partial \mathbf{b}_{g}}$ | $-\mathbf{I}_{3\times3}$ |
+| $\frac{\partial \dot{\mathbf{p}}}{\partial \mathbf{v}}$ | $\mathbf{I}\_{3\times3}$ |
+| $\frac{\partial \dot{\mathbf{v}}}{\partial \boldsymbol{\phi}^R}$ | $-\mathbf{R} [\tilde{\mathbf{a}}]\_{\times}$ |
+| $\frac{\partial \dot{\mathbf{v}}}{\partial \mathbf{b}\_{a}}$ | $-\mathbf{R}$ |
+| $\frac{\partial \dot{\mathbf{v}}}{\partial \mathbf{g}}$ | $\mathbf{M}\_{g}$ (3×2 S2 tangent) |
+| $\frac{\partial \dot{\boldsymbol{\phi}}^R}{\partial \mathbf{b}\_{g}}$ | $-\mathbf{I}\_{3\times3}$ |
 
 #### 6.2 Process Noise Jacobian $\mathbf{G} = \frac{\partial f}{\partial \mathbf{w}}$
 
-Process noise $\mathbf{w} \in \mathbb{R}^{12}$: $[\mathbf{n}_{g}, \mathbf{n}_{a}, \mathbf{n}_{bg}, \mathbf{n}_{ba}]$.
+Process noise $\mathbf{w} \in \mathbb{R}^{12}$: $[\mathbf{n}\_{g}, \mathbf{n}\_{a}, \mathbf{n}\_{bg}, \mathbf{n}\_{ba}]$.
 
 $$
 \mathbf{G} = \begin{bmatrix}
@@ -177,21 +188,21 @@ $$
 #### 6.3 Process Noise Model $\mathbf{Q}$
 
 $$
-\mathbf{Q} = \text{diag}(\sigma_{ng}^2 \mathbf{I}_{3}, \sigma_{na}^2 \mathbf{I}_{3}, \sigma_{nbg}^2 \mathbf{I}_{3}, \sigma_{nba}^2 \mathbf{I}_{3})
+\mathbf{Q} = \text{diag}(\sigma\_{ng}^2 \mathbf{I}\_{3}, \sigma\_{na}^2 \mathbf{I}\_{3}, \sigma\_{nbg}^2 \mathbf{I}\_{3}, \sigma\_{nba}^2 \mathbf{I}\_{3})
 $$
 
 | Parameter | Symbol | Typical (phone) | Description |
 |-----------|--------|-----------------|-------------|
-| Gyro noise | $\sigma_{ng}$ | ~1e-2 rad/s/√Hz | White noise on angular velocity |
-| Accel noise | $\sigma_{na}$ | ~1e-1 m/s²/√Hz | White noise on linear acceleration |
-| Gyro bias RW | $\sigma_{nbg}$ | ~1e-5 rad/s/√Hz | Random walk of gyro bias |
-| Accel bias RW | $\sigma_{nba}$ | ~1e-4 m/s²/√Hz | Random walk of accel bias |
+| Gyro noise | $\sigma\_{ng}$ | ~1e-2 rad/s/√Hz | White noise on angular velocity |
+| Accel noise | $\sigma\_{na}$ | ~1e-1 m/s²/√Hz | White noise on linear acceleration |
+| Gyro bias RW | $\sigma\_{nbg}$ | ~1e-5 rad/s/√Hz | Random walk of gyro bias |
+| Accel bias RW | $\sigma\_{nba}$ | ~1e-4 m/s²/√Hz | Random walk of accel bias |
 
 #### 6.4 Discrete-Time Covariance Update
 
-For small $\Delta t$: $\mathbf{F}_{1} = \mathbf{I} + \Delta t \cdot \mathbf{F}$.
+For small $\Delta t$: $\mathbf{F}\_{1} = \mathbf{I} + \Delta t \cdot \mathbf{F}$.
 
-For **SO3** states, the transition uses $\mathbf{A}(-\Delta t \cdot \tilde{\boldsymbol{\omega}})^\top$ to map rotation error. For **S2** (gravity), the transition uses $N_x \cdot R_{exp} \cdot M_x$ between tangent spaces.
+For **SO3** states, the transition uses $\mathbf{A}(-\Delta t \cdot \tilde{\boldsymbol{\omega}})^\top$ to map rotation error. For **S2** (gravity), the transition uses $N\_{x} \cdot R\_{exp} \cdot M\_{x}$ between tangent spaces.
 
 $$
 \mathbf{P}_{k+1|k} = \mathbf{F}_{1} \mathbf{P}_{k|k} \mathbf{F}_{1}^\top + (\Delta t \cdot \mathbf{G}) \mathbf{Q} (\Delta t \cdot \mathbf{G})^\top
@@ -212,49 +223,52 @@ For **rotation** on SO3, the residual must respect the manifold:
 **Proper form (used in code):**
 
 $$
-\mathbf{y}_{rot} = \log\left( R_{obs} \cdot R_{pred}^{-1} \right)
+\mathbf{y}\_{rot} = \log\left( R\_{obs} \cdot R\_{pred}^{-1} \right)
 $$
 
 **Pose (position + rotation):**
 
 $$
-\mathbf{y}_{pose} = \begin{bmatrix} \mathbf{z}_{p} - \mathbf{h}_{p}(\mathbf{x}) \\ \log(R_{obs} \cdot R_{pred}^{-1}) \end{bmatrix}
+\mathbf{y}\_{pose} = \begin{bmatrix}
+\mathbf{z}\_{p} - \mathbf{h}\_{p}(\mathbf{x}) \\
+\log(R\_{obs} \cdot R\_{pred}^{-1})
+\end{bmatrix}
 $$
 
 #### 7.2 Position Measurement (GNSS)
 
-**Model:** $\mathbf{h}_{pos}(\mathbf{x}) = \mathbf{p} + \mathbf{R} \mathbf{t}_{gnss}$
+**Model:** $\mathbf{h}\_{pos}(\mathbf{x}) = \mathbf{p} + \mathbf{R} \mathbf{t}\_{gnss}$
 
-**Jacobian:** $\frac{\partial \mathbf{h}_{pos}}{\partial \mathbf{p}} = \mathbf{I}$, $\frac{\partial \mathbf{h}_{pos}}{\partial \mathbf{t}_{gnss}} = \mathbf{R}$, $\frac{\partial \mathbf{h}_{pos}}{\partial \boldsymbol{\phi}^R} = \mathbf{R} [-\mathbf{t}_{gnss}]_{\times}$
+**Jacobian:** $\frac{\partial \mathbf{h}\_{pos}}{\partial \mathbf{p}} = \mathbf{I}$, $\frac{\partial \mathbf{h}\_{pos}}{\partial \mathbf{t}\_{gnss}} = \mathbf{R}$, $\frac{\partial \mathbf{h}\_{pos}}{\partial \boldsymbol{\phi}^R} = \mathbf{R} [-\mathbf{t}\_{gnss}]\_{\times}$
 
-**Derivation:** $\mathbf{p} + \mathbf{R} \exp(\boldsymbol{\phi}) \mathbf{t}_{gnss} \approx \mathbf{p} + \mathbf{R}(\mathbf{I} + [\boldsymbol{\phi}]_{\times}) \mathbf{t}_{gnss}$, hence $\frac{\partial}{\partial \boldsymbol{\phi}} \mathbf{R} [\boldsymbol{\phi}]_{\times} \mathbf{t}_{gnss} = \mathbf{R} [-\mathbf{t}_{gnss}]_{\times}$.
+**Derivation:** $\mathbf{p} + \mathbf{R} \exp(\boldsymbol{\phi}) \mathbf{t}\_{gnss} \approx \mathbf{p} + \mathbf{R}(\mathbf{I} + [\boldsymbol{\phi}]\_{\times}) \mathbf{t}\_{gnss}$, hence $\frac{\partial}{\partial \boldsymbol{\phi}} \mathbf{R} [\boldsymbol{\phi}]\_{\times} \mathbf{t}\_{gnss} = \mathbf{R} [-\mathbf{t}\_{gnss}]\_{\times}$.
 
 #### 7.3 Rotation Measurement (GNSS Heading)
 
-**Model:** $\mathbf{h}_{rot}(\mathbf{x}) = \log(\mathbf{R} \cdot \mathbf{R}_{gnss})$
+**Model:** $\mathbf{h}\_{rot}(\mathbf{x}) = \log(\mathbf{R} \cdot \mathbf{R}\_{gnss})$
 
-**Jacobian:** Let $\boldsymbol{\phi}_{hat} = \log(\mathbf{R} \mathbf{R}_{gnss})$. Then:
+**Jacobian:** Let $\boldsymbol{\phi}\_{hat} = \log(\mathbf{R} \mathbf{R}\_{gnss})$. Then:
 
 $$
-\frac{\partial \log(\mathbf{R} \mathbf{R}_{gnss})}{\partial \boldsymbol{\phi}^R} = \mathbf{J}_{r}^{-1}(\boldsymbol{\phi}_{hat}) \cdot \mathbf{R}_{gnss}^\top, \quad
-\frac{\partial \log(\mathbf{R} \mathbf{R}_{gnss})}{\partial \boldsymbol{\phi}^{R_{gnss}}} = \mathbf{J}_{r}^{-1}(\boldsymbol{\phi}_{hat})
+\frac{\partial \log(\mathbf{R} \mathbf{R}\_{gnss})}{\partial \boldsymbol{\phi}^R} = \mathbf{J}\_{r}^{-1}(\boldsymbol{\phi}\_{hat}) \cdot \mathbf{R}\_{gnss}^\top, \quad
+\frac{\partial \log(\mathbf{R} \mathbf{R}\_{gnss})}{\partial \boldsymbol{\phi}^{R\_{gnss}}} = \mathbf{J}\_{r}^{-1}(\boldsymbol{\phi}\_{hat})
 $$
 
 #### 7.4 Velocity Measurement (Zero-Velocity / Chassis)
 
-**Model:** $\mathbf{h}_{vel}(\mathbf{x}) = \mathbf{R}_{car} (\mathbf{R}^{-1} \mathbf{v})$
+**Model:** $\mathbf{h}\_{vel}(\mathbf{x}) = \mathbf{R}\_{car} (\mathbf{R}^{-1} \mathbf{v})$
 
-**Jacobian:** $\frac{\partial \mathbf{h}_{vel}}{\partial \boldsymbol{\phi}^R} = \mathbf{R}_{car} [\mathbf{R}^{-1} \mathbf{v}]_{\times}$, $\frac{\partial \mathbf{h}_{vel}}{\partial \mathbf{v}} = \mathbf{R}_{car} \mathbf{R}^{-1}$, $\frac{\partial \mathbf{h}_{vel}}{\partial \boldsymbol{\phi}^{R_{car}}} = -\mathbf{R}_{car} [\mathbf{R}^{-1} \mathbf{v}]_{\times}$
+**Jacobian:** $\frac{\partial \mathbf{h}\_{vel}}{\partial \boldsymbol{\phi}^R} = \mathbf{R}\_{car} [\mathbf{R}^{-1} \mathbf{v}]\_{\times}$, $\frac{\partial \mathbf{h}\_{vel}}{\partial \mathbf{v}} = \mathbf{R}\_{car} \mathbf{R}^{-1}$, $\frac{\partial \mathbf{h}\_{vel}}{\partial \boldsymbol{\phi}^{R\_{car}}} = -\mathbf{R}\_{car} [\mathbf{R}^{-1} \mathbf{v}]\_{\times}$
 
 #### 7.5 Velocity Squared Norm
 
-**Model:** $h_{vel2}(\mathbf{x}) = \|\mathbf{v}\|^2$. **Jacobian:** $\frac{\partial h_{vel2}}{\partial \mathbf{v}} = 2 \mathbf{v}^\top$
+**Model:** $h\_{vel2}(\mathbf{x}) = \|\mathbf{v}\|^2$. **Jacobian:** $\frac{\partial h\_{vel2}}{\partial \mathbf{v}} = 2 \mathbf{v}^\top$
 
 #### 7.6 Accelerometer Bias (Zero-Acceleration)
 
-**Model:** $\mathbf{h}_{acc}(\mathbf{x}) = \mathbf{R}(\mathbf{a}_{imu} - \mathbf{b}_{a}) + \mathbf{g}$ (expected zero when stationary)
+**Model:** $\mathbf{h}\_{acc}(\mathbf{x}) = \mathbf{R}(\mathbf{a}\_{imu} - \mathbf{b}\_{a}) + \mathbf{g}$ (expected zero when stationary)
 
-**Jacobian:** $\frac{\partial \mathbf{h}_{acc}}{\partial \boldsymbol{\phi}^R} = -\mathbf{R} [\mathbf{a}_{imu} - \mathbf{b}_{a}]_{\times}$, $\frac{\partial \mathbf{h}_{acc}}{\partial \mathbf{b}_{a}} = -\mathbf{R}$, $\frac{\partial \mathbf{h}_{acc}}{\partial \mathbf{g}} = \mathbf{M}_{g}$
+**Jacobian:** $\frac{\partial \mathbf{h}\_{acc}}{\partial \boldsymbol{\phi}^R} = -\mathbf{R} [\mathbf{a}\_{imu} - \mathbf{b}\_{a}]\_{\times}$, $\frac{\partial \mathbf{h}\_{acc}}{\partial \mathbf{b}\_{a}} = -\mathbf{R}$, $\frac{\partial \mathbf{h}\_{acc}}{\partial \mathbf{g}} = \mathbf{M}\_{g}$
 
 #### 7.7 Iterated EKF Update
 
@@ -266,17 +280,17 @@ For measurement $\mathbf{z}$ with model $\mathbf{h}(\mathbf{x})$ and noise covar
 4. **State update:** $\mathbf{x} \leftarrow \mathbf{x} \oplus (\mathbf{K} \mathbf{y})$
 5. **Covariance update:** $\mathbf{P} \leftarrow (\mathbf{I} - \mathbf{K} \mathbf{H}) \mathbf{P}$
 
-The **iterated** update repeats with the current $\mathbf{x}$ and $\mathbf{H}$ until $\|\delta\mathbf{x}_{i}\| < \epsilon_{i}$ (typical $\epsilon \sim 10^{-4}$) or max iterations (5–10).
+The **iterated** update repeats with the current $\mathbf{x}$ and $\mathbf{H}$ until $\|\delta\mathbf{x}\_{i}\| < \epsilon\_{i}$ (typical $\epsilon \sim 10^{-4}$) or max iterations (5–10).
 
 **Jacobian Summary Table:**
 
-| Measurement | $h(\mathbf{x})$ | $\frac{\partial h}{\partial \mathbf{p}}$ | $\frac{\partial h}{\partial \mathbf{R}}$ | $\frac{\partial h}{\partial \mathbf{v}}$ | $\frac{\partial h}{\partial \mathbf{b}_{a}}$ | $\frac{\partial h}{\partial \mathbf{g}}$ |
+| Measurement | $h(\mathbf{x})$ | $\frac{\partial h}{\partial \mathbf{p}}$ | $\frac{\partial h}{\partial \mathbf{R}}$ | $\frac{\partial h}{\partial \mathbf{v}}$ | $\frac{\partial h}{\partial \mathbf{b}\_{a}}$ | $\frac{\partial h}{\partial \mathbf{g}}$ |
 |-------------|-----------------|-------------------------------------------|-------------------------------------------|-------------------------------------------|---------------------------------------------|------------------------------------------|
-| Position | $\mathbf{p} + \mathbf{R}\mathbf{t}_{gnss}$ | $\mathbf{I}$ | $\mathbf{R}[-\mathbf{t}_{gnss}]_{\times}$ | $\mathbf{0}$ | $\mathbf{0}$ | $\mathbf{0}$ |
-| Rotation | $\log(\mathbf{R}\mathbf{R}_{gnss})$ | $\mathbf{0}$ | $\mathbf{J}_{r}^{-1}[\boldsymbol{\phi}] \mathbf{R}_{gnss}^\top$ | $\mathbf{0}$ | $\mathbf{0}$ | $\mathbf{0}$ |
-| Velocity | $\mathbf{R}_{car}\mathbf{R}^{-1}\mathbf{v}$ | $\mathbf{0}$ | $\mathbf{R}_{car}[\mathbf{R}^{-1}\mathbf{v}]_{\times}$ | $\mathbf{R}_{car}\mathbf{R}^{-1}$ | $\mathbf{0}$ | $\mathbf{0}$ |
+| Position | $\mathbf{p} + \mathbf{R}\mathbf{t}\_{gnss}$ | $\mathbf{I}$ | $\mathbf{R}[-\mathbf{t}\_{gnss}]\_{\times}$ | $\mathbf{0}$ | $\mathbf{0}$ | $\mathbf{0}$ |
+| Rotation | $\log(\mathbf{R}\mathbf{R}\_{gnss})$ | $\mathbf{0}$ | $\mathbf{J}\_{r}^{-1}[\boldsymbol{\phi}] \mathbf{R}\_{gnss}^\top$ | $\mathbf{0}$ | $\mathbf{0}$ | $\mathbf{0}$ |
+| Velocity | $\mathbf{R}\_{car}\mathbf{R}^{-1}\mathbf{v}$ | $\mathbf{0}$ | $\mathbf{R}\_{car}[\mathbf{R}^{-1}\mathbf{v}]\_{\times}$ | $\mathbf{R}\_{car}\mathbf{R}^{-1}$ | $\mathbf{0}$ | $\mathbf{0}$ |
 | Vel²norm | $\|\mathbf{v}\|^2$ | $\mathbf{0}$ | $\mathbf{0}$ | $2\mathbf{v}^\top$ | $\mathbf{0}$ | $\mathbf{0}$ |
-| Acc bias | $\mathbf{R}(\mathbf{a}-\mathbf{b}_{a})+\mathbf{g}$ | $\mathbf{0}$ | $-\mathbf{R}[\tilde{\mathbf{a}}]_{\times}$ | $\mathbf{0}$ | $-\mathbf{R}$ | $\mathbf{M}_{g}$ |
+| Acc bias | $\mathbf{R}(\mathbf{a}-\mathbf{b}\_{a})+\mathbf{g}$ | $\mathbf{0}$ | $-\mathbf{R}[\tilde{\mathbf{a}}]\_{\times}$ | $\mathbf{0}$ | $-\mathbf{R}$ | $\mathbf{M}\_{g}$ |
 
 ---
 
@@ -285,8 +299,8 @@ The **iterated** update repeats with the current $\mathbf{x}$ and $\mathbf{H}$ u
 ### 8. Initialization
 
 1. **Origin**: First GNSS position → `origin` in UTM.
-2. **Rotation**: From GNSS heading (and optionally pitch): $\mathbf{R}_{0} = R_z(\psi) \cdot R_y(\theta)$.
-3. **Velocity**: $\mathbf{v}_{0} = \mathbf{R}_{0} \cdot \mathbf{v}_{gnss}^{body}$.
+2. **Rotation**: From GNSS heading (and optionally pitch): $\mathbf{R}\_{0} = R_z(\psi) \cdot R_y(\theta)$.
+3. **Velocity**: $\mathbf{v}\_{0} = \mathbf{R}\_{0} \cdot \mathbf{v}\_{gnss}^{body}$.
 4. **Covariance**: Diagonal blocks, e.g.:
    - Position: $\sim 1e-8$
    - Rotation: yaw large (1e8), roll/pitch small (1e-5)
@@ -304,8 +318,8 @@ The **iterated** update repeats with the current $\mathbf{x}$ and $\mathbf{H}$ u
 | Velocity | GNSS velocity / ZUPT | Moving / stationary |
 | Rotation (yaw) | GNSS heading | Moving |
 | Rotation (roll/pitch) | Gravity / GNSS pitch | Prior or pitch available |
-| Gyro bias $\mathbf{b}_{g}$ | — | Requires rotational motion |
-| Accel bias $\mathbf{b}_{a}$ | ZUPT / position/velocity | Stationary or motion |
+| Gyro bias $\mathbf{b}\_{g}$ | — | Requires rotational motion |
+| Accel bias $\mathbf{b}\_{a}$ | ZUPT / position/velocity | Stationary or motion |
 | Gravity $\mathbf{g}$ | Accelerometer | Orientation known |
 
 ---
