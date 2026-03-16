@@ -39,18 +39,21 @@ The filter runs in a **predict–update** loop:
 #### 2.1 SO(3) Lie Algebra
 
 The **hat operator** maps $\boldsymbol{\phi} \in \mathbb{R}^3$ to $\mathfrak{so}(3)$:
+
 $$
 [\boldsymbol{\phi}]_{\times} = \boldsymbol{\phi}^\wedge = 
 \begin{bmatrix} 0 & -\phi_z & \phi_y \\ \phi_z & 0 & -\phi_x \\ -\phi_y & \phi_x & 0 \end{bmatrix}
 $$
 
 The **A-matrix** (right Jacobian of SO(3) for exp) relates $\delta\boldsymbol{\phi}$ to rotation perturbation. For $\boldsymbol{\theta} \in \mathbb{R}^3$, $\theta = \|\boldsymbol{\theta}\|$:
+
 $$
 \mathbf{A}(\boldsymbol{\theta}) = \mathbf{I} + \frac{1-\cos\theta}{\theta^2} [\boldsymbol{\theta}]_{\times} + \frac{1 - \frac{\sin\theta}{\theta}}{\theta^2} [\boldsymbol{\theta}]_{\times}^2
 $$
 When $\theta \to 0$: $\mathbf{A}(\boldsymbol{\theta}) \to \mathbf{I}$.
 
 The **inverse right Jacobian** $\mathbf{J}_{r}^{-1}(\boldsymbol{\phi})$ maps from tangent space of $\log(R)$ to rotation perturbation. For $\phi = \|\boldsymbol{\phi}\|$:
+
 $$
 \mathbf{J}_{r}^{-1}(\boldsymbol{\phi}) = \mathbf{I} + \frac{1}{2}[\boldsymbol{\phi}]_{\times} + \left(1 - \frac{\frac{\theta}{2}(1+\cos\theta)}{\sin\theta}\right) \left(\frac{\boldsymbol{\phi}\boldsymbol{\phi}^\top}{\|\boldsymbol{\phi}\|^2} - \mathbf{I}\right)
 $$
@@ -115,6 +118,7 @@ $$
 $$
 
 Let $\tilde{\mathbf{a}} = \mathbf{a} - \mathbf{b}_{a}$, $\tilde{\boldsymbol{\omega}} = \boldsymbol{\omega} - \mathbf{b}_{g}$. The flatted output is:
+
 $$
 f(\mathbf{x}, \mathbf{u}) = \begin{bmatrix} \mathbf{v} \\ \tilde{\boldsymbol{\omega}} \\ \mathbf{R}\tilde{\mathbf{a}} + \mathbf{g} \\ \mathbf{0} \\ \ldots \\ \mathbf{0} \end{bmatrix}
 $$
@@ -126,6 +130,7 @@ $$
 The continuous dynamics are integrated over $\Delta t$. Three schemes are used:
 
 **Linear (Euler):**
+
 $$
 \mathbf{R}_{k+1} = \mathbf{R}_{k} \exp(\Delta t \cdot \tilde{\boldsymbol{\omega}}), \quad
 \mathbf{v}_{k+1} = \mathbf{v}_{k} + \Delta t \cdot (\mathbf{R}_{k} \tilde{\mathbf{a}} + \mathbf{g})
@@ -205,11 +210,13 @@ For **Euclidean** measurements (position, velocity): $\mathbf{y} = \mathbf{z} - 
 For **rotation** on SO3, the residual must respect the manifold:
 
 **Proper form (used in code):**
+
 $$
 \mathbf{y}_{rot} = \log\left( R_{obs} \cdot R_{pred}^{-1} \right)
 $$
 
 **Pose (position + rotation):**
+
 $$
 \mathbf{y}_{pose} = \begin{bmatrix} \mathbf{z}_{p} - \mathbf{h}_{p}(\mathbf{x}) \\ \log(R_{obs} \cdot R_{pred}^{-1}) \end{bmatrix}
 $$
@@ -227,6 +234,7 @@ $$
 **Model:** $\mathbf{h}_{rot}(\mathbf{x}) = \log(\mathbf{R} \cdot \mathbf{R}_{gnss})$
 
 **Jacobian:** Let $\boldsymbol{\phi}_{hat} = \log(\mathbf{R} \mathbf{R}_{gnss})$. Then:
+
 $$
 \frac{\partial \log(\mathbf{R} \mathbf{R}_{gnss})}{\partial \boldsymbol{\phi}^R} = \mathbf{J}_{r}^{-1}(\boldsymbol{\phi}_{hat}) \cdot \mathbf{R}_{gnss}^\top, \quad
 \frac{\partial \log(\mathbf{R} \mathbf{R}_{gnss})}{\partial \boldsymbol{\phi}^{R_{gnss}}} = \mathbf{J}_{r}^{-1}(\boldsymbol{\phi}_{hat})
